@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Rose Day, My Love!</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            background-color: #ffe6e6;
+            overflow: hidden;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        #rose {
+            width: 300px;
+            height: 300px;
+        }
+        #greeting {
+            font-size: 2.5em;
+            color: #ff4d4d;
+            margin: 20px 0;
+            opacity: 0;
+            text-align: center;
+        }
+        .cube-container {
+            width: 200px;
+            height: 200px;
+            perspective: 1000px;
+            margin: 20px 0;
+        }
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate 20s infinite linear;
+        }
+        .cube-face {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.8;
+            border: 2px solid #ff4d4d;
+        }
+        .front  { transform: rotateY(0deg) translateZ(100px); }
+        .right  { transform: rotateY(90deg) translateZ(100px); }
+        .back   { transform: rotateY(180deg) translateZ(100px); }
+        .left   { transform: rotateY(-90deg) translateZ(100px); }
+        .top    { transform: rotateX(90deg) translateZ(100px); }
+        .bottom { transform: rotateX(-90deg) translateZ(100px); }
+        @keyframes rotate {
+            from { transform: rotateX(0deg) rotateY(0deg); }
+            to { transform: rotateX(360deg) rotateY(360deg); }
+        }
+        #message {
+            font-size: 1.2em;
+            color: #ff6b6b;
+            text-align: center;
+            max-width: 80%;
+            opacity: 0;
+            line-height: 1.5;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            #rose {
+                width: 200px;
+                height: 200px;
+            }
+
+            #greeting {
+                font-size: 2em;
+            }
+
+            .cube-container {
+                width: 150px;
+                height: 150px;
+            }
+
+            .cube-face {
+                width: 150px;
+                height: 150px;
+            }
+
+            #message {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <svg id="rose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <path id="stem" fill="none" stroke="#2ecc71" stroke-width="2" d="M50 100 Q50 85 50 70" />
+            <path id="leaf-left" fill="#2ecc71" d="M50 80 Q40 75 45 70 Q50 65 50 70 Z" />
+            <path id="leaf-right" fill="#2ecc71" d="M50 85 Q60 80 55 75 Q50 70 50 75 Z" />
+            <g id="petals">
+                <path fill="#e74c3c" d="M50 50 Q60 40 50 30 Q40 40 50 50" />
+                <path fill="#e74c3c" d="M50 50 Q60 60 50 70 Q40 60 50 50" />
+                <path fill="#e74c3c" d="M50 50 Q70 50 80 40 Q60 30 50 50" />
+                <path fill="#e74c3c" d="M50 50 Q30 50 20 40 Q40 30 50 50" />
+                <path fill="#c0392b" d="M50 50 Q60 50 70 60 Q55 70 50 50" />
+                <path fill="#c0392b" d="M50 50 Q40 50 30 60 Q45 70 50 50" />
+            </g>
+        </svg>
+        <h1 id="greeting">Happy Rose Day, My Love!</h1>
+        <div class="cube-container">
+            <div class="cube">
+                <div class="cube-face front"></div>
+                <div class="cube-face back"></div>
+                <div class="cube-face right"></div>
+                <div class="cube-face left"></div>
+                <div class="cube-face top"></div>
+                <div class="cube-face bottom"></div>
+            </div>
+        </div>
+        <p id="message"></p>
+    </div>
+    <script>
+        gsap.set("#rose", { scale: 0, opacity: 0 });
+        gsap.set("#petals path", { scale: 0, transformOrigin: "center" });
+        gsap.set("#stem", { scaleY: 0, transformOrigin: "bottom" });
+        gsap.set("#leaf-left, #leaf-right", { scale: 0, transformOrigin: "center" });
+
+        const tl = gsap.timeline();
+
+        tl.to("#rose", { duration: 1, scale: 1, opacity: 1, ease: "back.out(1.7)" })
+          .to("#stem", { duration: 1, scaleY: 1, ease: "power1.out" }, "-=0.5")
+          .to("#leaf-left, #leaf-right", { duration: 0.5, scale: 1, ease: "back.out(1.7)" }, "-=0.5")
+          .to("#petals path", { duration: 0.5, scale: 1, stagger: 0.1, ease: "back.out(1.7)" }, "-=0.5");
+
+        gsap.to("#greeting", { duration: 1, opacity: 1, y: -20, delay: 2.5 });
+
+        const images = [
+            'image1.jpg',  
+            'image2.jpg',
+            'image3.jpg',
+            'image4.jpg',
+            'image5.jpg',
+            'image6.jpg'
+        ];
+
+        document.querySelectorAll('.cube-face').forEach((face, index) => {
+            face.style.backgroundImage = `url(${images[index]})`;
+        });
+
+        const message = "My dearest darling Bobu,First of all, Happy Rose Day, and a very very Happy 21 months to us!You are the most beautiful rose in my garden of life";
+
+        gsap.to("#message", {
+            duration: 2,
+            opacity: 1,
+            y: -20,
+            delay: 4,
+            onStart: function() {
+                const messageElement = document.getElementById('message');
+                let i = 0;
+                const intervalId = setInterval(() => {
+                    if (i < message.length) {
+                        messageElement.textContent += message.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(intervalId);
+                    }
+                }, 50);
+            }
+        });
+    </script>
+</body>
+</html>
